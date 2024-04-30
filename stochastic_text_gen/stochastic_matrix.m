@@ -1,26 +1,15 @@
 function retval = stochastic_matrix(k_secv_corpus, corpus_words, words_set, k_secv_set, k)
-    % Map all k-sequences and words to indices in their respective sets
-    [ismem_k_secv, idx_k_secv] = ismember(k_secv_corpus, k_secv_set);
-    [ismem_words, idx_words] = ismember(corpus_words, words_set);
+    [in_k_secv_set, k_secv_idx] = ismember(k_secv_corpus, k_secv_set); % in_k_secv_set = 1 daca k_secv_corpus[i] e in k_secv_set, 0 altfel
+    [in_words_set, words_idx] = ismember(corpus_words, words_set); % in_words_set = 1 daca corpus_words[i] e in words_set, 0 altfel
 
-    % Initialize the transition matrix
-    corpus_words_len = length(corpus_words);
-    words_set_len = length(words_set);
-    transition_matrix = zeros(corpus_words_len - k, words_set_len);
+    matrix = zeros(length(corpus_words) - k, length(words_set));  %initializam matricea cu 0
 
-    % Populate the transition matrix using precomputed indices
-    for index = 1:(corpus_words_len - k)
-        if ismem_k_secv(index) && ismem_words(index + k)
-            sequence_index = idx_k_secv(index);
-            word_index = idx_words(index + k);
-            transition_matrix(sequence_index, word_index) += 1;
-        end
-    end
-
-    % Remove rows that contain only zeros
-    nonzero_rows = any(transition_matrix, 2);
-    filtered_matrix = transition_matrix(nonzero_rows, :);
-
-    % Convert to sparse matrix format
-    retval = sparse(filtered_matrix);
-end
+    for i = 1:length(corpus_words) - k %parcurgem cuvintele din corpus
+        if in_k_secv_set(i) && in_words_set(i + k) %daca secventa de k cuvinte si cuvantul de pe pozitia i+k exista in seturile de date
+            sequence_index = k_secv_idx(i); %extragem indexul secventei
+            word_index = words_idx(i + k); %extragem indexul cuvantului 
+            ++matrix(sequence_index, word_index); %incrementam frecventa cuvantului word_index in secventa sequence_index
+        endif
+    endfor
+    retval = sparse(matrix(any(matrix, 2), :)); %eliminam liniile cu toate elementele 0
+endfunction

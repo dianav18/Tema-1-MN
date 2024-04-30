@@ -10,6 +10,6 @@ function [false_positives, false_negatives, true_positives] = check_predictions(
             true_positives = true_positives + 1;
         elseif predictions(i) == 0 && truths(i) == 1
             false_negatives = false_negatives + 1;
-        end
-    end
-end
+        endif
+    endfor
+endfunction

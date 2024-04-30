@@ -1,0 +1,56 @@
+Anomaly detection
+Functia estimate_gaussian primeste un set de date sub forma de matrice si returnează media si varianta pentru fiecare coloana a setului de date. Functia primeste o matrice X ca argument, unde fiecare coloana reprezinta un vector. Se calculeaza media si varianța pentru fiecare coloană a matricei X.
+
+Gaussian_distribution calculeaza densitatea de probabilitate pentru datasetul dat.Calculul se face conform formulei.
+
+Functia check_predictions este utilizata pentru pentru determinarea pozitivelor false si adevarate precum si a negativelor false. Functia parcurge fiecare element din vectorul  de predictii si compara valoarea fiecarui element cu adevarul corespunzator din vectorul truths. Astfel, functia actualizeaza variabilele ce contorizeaza  starile de fals pozitive, fals negative și adevărate positive, iar apoi le returneaza.
+
+Functia optimate_threshold parcurge fiecare valoare de prag si predictiile asociate pe baza probabilitatilor date. Apoi se calculeaza numărul de fals pozitive, fals negative și adevărate positive, metrici care sunt folosite pentru a calcula precizia, recuperarea si scorul F1, variabile determinate prin apelarea functiei metrics. Functia actualizeaza cel mai bun scor F1, respectiv valorile de precizie si recuperare, iar in final acestea sunt returnate.
+
+Kernel Regression
+Urmatoarele functii defines 3 tipuri diferite de kernel, unde x reprezintă datele de intrare cărora li se asociază valoarea de ieșire y  , cu x (i) ∈ R k și y (i) ∈ R.:
+Linear Kernel, definit prin formula x * y’, unde x si y sunt primiti ca parametri.
+Polynomial kernel, definit prin formula (x * y' + 1) ^ d, unde x, y, d sunt primiti ca parametri .
+Gaussian kernel, definit prin formula exp(-norm(x - y) ^ 2 / (2 * sigma ^ 2));
+
+Functia split_dataset primeste trei argumente: X si y, care reprezinta setul de date si etichetele corespunzatoare si percentage, care indica proportia de date care vor fi utilizate pentru antrenare. Mai intai, functia calculeaza numarul total de date din setul de date X. Apoi, calculeaza numarul de date care vor fi folosite pentru antrenare si pentru predictie, utilizand procentul specificat. Urmeaza selectia datelor pentru antrenare, care consta in alegerea primelor train date din setul de date X și etichetele corespunzatoare din y. Pentru predictie, functia selecteaza datele ramase din setul de date X si etichetele corespunzătoare din y. La final, funcția returneaza cele patru seturi de date: X_train si y_train pentru antrenare și X_pred și y_pred pentru predictie.
+
+Build_kernel construieste o matrice de kernel folosindu-se de ceea ce primeste ca parametru, un set de date X, o functie f si un parametru suplimentar, f_para.
+
+Functia Cholesky implementeaza metoda Cholesky pentru descompunerea A = LU a unei matrici pozitiv semi-definite, unde A = LL’, iar L este o matrice inferior triunghiulara.
+
+Get_lower_inverse 
+Algoritmul parcurge fiecare element al matricei si, in functie de pozitia sa in matrice, calculeaza valorile corespunzatoare pentru matricea inversa. In cazul elementelor de pe diagonala principala, inversa este calculata ca fiind inversul elementului corespunzator din matricea triunghiulara inferioara. Pentru elementele de sub diagonala principala, se aplica o suma ponderata a elementelor deja calculate ale matricei inverse, conform algoritmului de eliminare Gaussiana.
+
+Get_prediction_params
+Functia get_prediction_params primeste o matrice de kernel K, etichetele y, si un parametru de regularizare lambda, iar apoi calculeaza parametrii de predictie a folosind factorizarea Cholesky pentru rezolvarea sistemului de ecuatii liniare inferioare si superioare triunghiulare, care sunt necesari pentru predictia modelelor bazate pe kernel. Rezolvarea unui sistem cu o matrice inferior triunghiulara este mult mai eficienta decat a rezolva un system in care matricea coeficientilor e plina peste tot. In final, functia returneaza vectorul coloanal a, ce contine rezultatele.
+
+Funcția conjugate_gradient utilizeaza metoda gradientului conjugat pentru a solutiona sistemele de ecuatii liniare Ax = b, incepand cu o solutie initiala x0 si modificand solutia prin iteratii repetitive. In fiecare iteratie, functia actualizeaza solutia pana cand se ating toleranta sau numarul maxim de iteratii permise.
+
+Get_prediction_params_iterative foloseste metoda gradientului conjugat pentru a estima calculul parametrilor folositi la evaluare, folosindu-se de matricea de Kernel, valorile evaluate pentru inputurile pe care a fost construit K si parametrul lambda folosit pentru regularizare. Intoarce vectorul coloana a ce contine estimari ai parametrilor folositi la evaluare.
+
+Functia eval_value returneaza predictia facuta de datele de intrare X. Parcurge fiecare punct din setul de date și pentru fiecare calculează valoarea kernel-ului dintre punctul de intrare x și punctul respectiv din setul X. Aceasta valoare a kernel-ului este inmultita cu parametrul corespunzator din vectorul a si adaugata la valoarea predictiei. Acest proces este repetat pentru fiecare punct din setul de date.
+
+Stochastic_text_gen
+Functia distinct_words selecteaza tokenurile unice, apoi le sorteaza si le returneaza.
+
+Functia k_secv salveaza intr-un cell array secventele de k elemente. Intai determina cate sunt, pe urma le extrage si le 
+concateneaza la lista de secvente.
+
+Functia distinct_k_secv  este foarte asemanatoare cu distinct_words. Pastreaza doar elementele unice intr-o ordine sortata.
+
+Functia word_idx asociaza fiecarui cuvant un index.
+
+Functia k_secv_idx foloseste un map pentru a asocia fiecarei secvente de k cuvinte un index. Ea este foarte asemanatoare cu word_idx.
+
+Functia stochastic_matrix creeaza o matrice stocastica folosindu-se de dictionare si de k_secv.
+
+Functia sample_next_words intoarce probabilitatile, adica linia din matricea stocastica corespunzatoare ultimei k_secvente.
+
+Functia sample_n_words genereaza un set de cuvinte obtinute din k
+_secv.
+
+
+
+
+
